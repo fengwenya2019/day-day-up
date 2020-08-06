@@ -1,4 +1,4 @@
-"use strict";
+// "use strict"; // 启用严格模式
 const v = "Hi!  I'm a strict mode script!";
 console.log(v)
 
