@@ -46,12 +46,12 @@ getName()
 
 
 // 2）全局变量：函数内可以使用外部变量，并且可以修改外部变量的值。
-var age = 12
-const changeAge = function () {
-  age = 18
-  return age
-}
-console.log(changeAge()) // 18
+// var age = 12
+// const changeAge = function () {
+//   age = 18
+//   return age
+// }
+// console.log(changeAge()) // 18
 
 let gender = 'girl'
 const changeGender = function () {
@@ -125,4 +125,20 @@ console.log(res); // 3
 // 默认空值的 return 或没有 return 的函数返回值为 undefined 。
 
 
+// 箭头函数
+// 箭头函数不存在this；
+// 箭头函数不能当做构造函数，即不能用new实例化；
+// 箭头函数不存在arguments对象，即不能使用，可以使用rest参数代替；
+// 箭头函数不能使用yield命令，即不能用作Generator函数。 一个简单的例子：
+console.log(this, '111')
 
+function Person() {
+  this.age = 0
+  setInterval(() => {
+    this.age++;
+  }, 1000);
+
+}
+var p = new Person(); // 定时器一直在执行 p的值一直变化
+
+console.log(p.age)
