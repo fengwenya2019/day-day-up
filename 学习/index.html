@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+</html>
+
+<script>
+  console.log(1) 
+
+setTimeout(() => { 
+  // callback1     
+  console.log(2)
+  Promise.resolve().then(() => {
+    // callback5
+    console.log(3)
+  })主块[console]
+    macro[callback3, callback4]
+    micro []
+})
+1 4 10 5 6 7 2 3 9 8
+
+const a = {
+  a: 1,
+  b: {
+    c: 'he'
+  }
+}
+Map()
+new Promise((resolve, reject) => {
+  console.log(4)
+  resolve(5)
+}).then( data => {
+  console.log(data)
+  Promise.resolve().then(() => {
+    // callback2
+    console.log(6)
+  }).then(() => {
+    console.log(7)
+    
+    setTimeout(() => {
+      //callback4
+      console.log(8)
+    }, 0)
+  })
+})
+
+setTimeout(() => {
+  // callback3
+  console.log(9)
+})
+
+console.log(10)
+</script>
+
+
+
+<script>
+
+// macro1,同步执行，打印1
+console.log(1);    
+
+// macro2，异步宏任务放到 Event Queue ，我们标记为callback1（macro）
+setTimeout(() => {
+  // 同步任务
+  console.log(2);
+  // 异步微任务，我们标记为callback4（micro）
+  Promise.resolve().then(() => {
+    console.log(3)
+  });
+});
+
+// macro3 同步宏任务
+new Promise((resolve, reject) => {
+  // 同步执行，打印4
+  console.log(4)
+  resolve(5)
+  // micro1，异步微任务放到 Event Queue，我们标记为callback2（micro）
+}).then((data) => {
+  // 同步，打印5
+  console.log(data);  
+  // 异步微任务，放到 Event Queue，我们标记为callback5（micro）
+  Promise.resolve().then(() => {
+    console.log(6)
+  // 异步微任务，放到 Event Queue，我们标记为callback6（micro）
+  }).then(() => {
+    console.log(7)
+  // 异步宏任务，放到 Event Queue,我们标记为callback7（macro）
+    setTimeout(() => {
+      console.log(8)
+    }, 0);
+  });
+})
+
+// macro4，异步宏任务放到 Event Queue ，我们标记为callback3（macro）
+setTimeout(() => {
+  console.log(9);
+})
+
+// macro5，同步任务打印10
+console.log(10);
+
+
+// 分析：
+// *** 进入主线程，主线程的宏任务块有5个，先执行同步任务
+
+// 1. 【执行同步任务】
+//     (1).打印1，4，10
+
+
+// 2. Event Queue 的函数有 ：callback1（macro）、callback2（micro）、callback3（macro）
+
+// 3. 【先执行微任务 callback2（micro）】
+//     (1).执行同步任务，打印 5 ，打印console.log(data)，结果是5，data是 resolve的结果
+//     (2).callback5（micro）
+//     (3).callback6（micro）
+//     (4).callback7（macro）
+
+// *** 此时已经打印出：1，4，10，5
+// *** Event Queue 的函数依次是：callback1（macro）、callback3（macro）、callback5（micro）、callback6（micro）、callback7（macro）
+// ***微任务有两个，依次执行微任务
+
+// 4.【微任务】
+//     （1).callback5（micro）打印6
+//     （2).callback6（micro）打印7
+
+// *** 此时已经打印出：1，4，10，5，6，7
+// *** Event Queue 的函数依次是：callback1（macro）、callback3（macro）、callback7（macro）
+// *** 接下来依次执行
+
+// 5. 【宏任务callback1（macro）】
+//     (1).执行同步，打印2
+//     (2).callback4（micro）
+
+// *** 此时已经打印出：1，4，10，5，6，7，2
+// *** Event Queue 的函数依次是：callback3（macro）、callback7（macro）、callback4（micro）
+// *** 接下来先执行微任务
+
+
+// 6. 【微任务callback4（micro）】
+//     (1).打印3
+
+// *** 此时已经打印出：1，4，10，5，6，7，2，3
+// *** Event Queue 的函数依次是：callback3（macro）、callback7（macro）
+// *** 宏任务剩下两个，接下来依次执行
+
+// 7. 【宏任务callback3（macro）、callback7（macro）】
+//     (1).打印9
+//     (1).打印8
+
+// *** 此时已经打印出：1，4，10，5，6，7，2，3，9，8
+// *** 任务执行完毕，所有数字均已打印出来
+
+
+      
+
+</script>

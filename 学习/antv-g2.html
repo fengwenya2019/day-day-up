@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/g2plot/1.2.0-beta.0/g2plot.js"></script>
+  <style>
+    .box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid #ccc;
+      width: 50%;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class='box'>
+    <div class='chart' id='g2-chart'></div>
+  </div>
+
+  <script>
+    const data = [
+      { year: '1991', value: 3 },
+      { year: '1992', value: 4 },
+      { year: '1993', value: 7 },
+      { year: '1994', value: 5 },
+      { year: '1995', value: 6 }
+    ];
+    const chartDom = document.getElementById('g2-chart');
+    const line = new G2Plot.Line(chartDom, {
+      title: {
+        visible: true,
+        text: 'g2折线图实例'
+      },
+      description: {
+        visible: true,
+        text: '这是一个副标题'
+      },
+      data: data,
+      xField: 'year',
+      yField: 'value',
+      point: {
+        visible: true,
+        size: 5,
+        color: '#fff',
+        style: {
+          stroke: '#fe740c',//边框颜色
+          lineWidth: 2,
+          fillOpacity: 0.6
+        }
+      },
+      label: {
+        visible: true
+      },
+      color: '#f2740c',//线条的颜色
+      yAxis: {
+        formatter: function (v) {
+          return v + 'k';
+        }
+      }
+
+    });
+    line.render();
+  </script>
+</body>
+
+</html>

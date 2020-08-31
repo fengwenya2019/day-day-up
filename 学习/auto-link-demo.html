@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>release链接生成</title>
+        <script>
+            function create_link(){
+                var version = document.getElementById("s_version").value;
+                var tag = document.getElementById("s_tag").value;
+                var zjs = document.getElementsByName("zj");
+    
+                var check_zj = new Array();
+                var count = 0;
+                for(var i=0;i<zjs.length;i++){
+                    if(zjs[i].checked){
+                        check_zj[count] = zjs[i].value;
+                        count++;
+                    }
+                }
+
+                var link = "";
+                for(var j=0; j<check_zj.length; j++){
+                    link += "http://ipaddr/"+version+"/"+tag+"/"+check_zj[j]+"\n";
+                }
+                var show = document.getElementById("show_link");
+                show.innerText = link;
+            }
+        </script>
+    </head>
+    <body>
+        版本类型：
+        <select id="s_version">
+            <option value="标准版">标准版</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+        <br>
+        主版本号：
+        <select id="s_tag">
+            <option value="4.8.1">4.8.1</option>
+            <option value="4.8.2">4.8.2</option>
+            <option value="4.8.3">4.8.3</option>
+            <option value="4.8.4">4.8.4</option>
+        </select>
+        <br>
+        组件：
+        <input type="checkbox" value="--离线" name="zj">离线&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" value="--实时" name="zj">实时&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" value="--算法" name="zj">算法&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" value="--资产" name="zj">资产&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" value="--服务" name="zj">服务
+        <br>
+        <button type="button" onclick="create_link()">点击生成下载链接</button>
+        <br>
+        <div id="show_link"></div>
+    </body>
+</html>

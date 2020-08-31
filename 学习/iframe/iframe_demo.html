@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>iframe</title>
+</head>
+
+<body>
+  <p style="overflow: hidden;">这是一些文本。 这是一些文本。 这是一些文本。这是一些文本。 这是一些文本。 这是一些文本。
+    <iframe name="myiframe1" id="myrame1" src="demo.html" frameborder="0" align="left" width="300" height="200"
+      scrolling="no">
+      <p>你的浏览器不支持iframe标签</p>
+    </iframe>
+    <iframe name="myiframe2" id="myrame2" src="demo2.html" frameborder="0" align="left" width="300" height="200"
+      scrolling="no">
+      <p>你的浏览器不支持iframe标签</p>
+    </iframe>
+    这是一些文本。 这是一些文本。 这是一些文本。这是一些文本。 这是一些文本。 这是一些文本。
+  </p>
+  <p>
+    <iframe name="myiframe3" id="myrame3" src="http://baidu.com/" allowtransparency="true" frameborder="0" align="left"
+      width="1200" height="500" scrolling="no">
+      <p>你的浏览器不支持iframe标签</p>
+    </iframe>
+  </p>
+  <p>
+    <iframe name="myiframe4" id="myrame4" src="https://www.doyoudo.com/" allowfullscreen="true" frameborder="0"
+      align="left" width="1200" height="500" scrolling="no">
+      <p>你的浏览器不支持iframe标签</p>
+    </iframe>
+  </p>
+</body>
+
+</html>
+<script>
+  //  获取iframe里的内容
+  // 方法1:
+  // var iframe = document.getElementById("myrame1"); //获取iframe标签
+  // var iwindow = iframe.contentWindow; //获取iframe的window对象
+  // var idoc = iwindow.document; //获取iframe的document对象
+  // console.log(idoc.documentElement); //获取iframe的html
+
+  // 方法2:
+  var iframe = window.frames['myiframe2']
+  var idoc = iframe.document; //获取iframe的document对象
+  console.log(idoc.documentElement); //获取iframe的html
+
+  // console.log("h1", idoc.getElementById('h'));
+  // console.log(window.self === window.top)
+  // console.log(window.parent)
+</script>
