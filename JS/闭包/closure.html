@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包</title>
+</head>
+<body>
+  <p>闭包让你可以在一个内层函数中访问到其外层函数的作用域。</p>
+  <p>闭包会产生一个很经典的问题:</p>
+  <ul>
+    <li>多个子函数的作用域都是同时指向父级，是完全共享的。因此当父级的变量对象被修改时，所有子函数都受到影响。</li>
+  </ul>
+  <p>解决:</p>
+  <ul>
+    <li>变量可以通过 函数参数的形式 传入，避免使用默认的作用域向上查找</li>
+    <li>使用setTimeout包裹，通过第三个参数传入</li>
+    <li>使用 块级作用域，让变量成为自己上下文的属性，避免共享</li>
+  </ul>
+
+  <a href="#" id="size-12">12</a>
+  <a href="#" id="size-14">14</a>
+  <a href="#" id="size-16">16</a> 
+</body>
+</html>
+<!-- <script src="./closure.js"></script> -->
+<script>
+
+  // 通过点击事件更改字号，重复代码较多。
+  // document.getElementById('size-12').onclick =()=>{
+  //   document.body.style.fontSize = '12px';
+  // } 
+  // document.getElementById('size-14').onclick =()=>{
+  //   document.body.style.fontSize = '14px';
+  // } 
+  // document.getElementById('size-16').onclick = ()=>{
+  //   document.body.style.fontSize = '16px';
+  // }
+
+  // 闭包：
+  // 采用闭包
+  function makeSizer(size) {
+    return function() {
+      document.body.style.fontSize = size + 'px';
+    }
+  } 
+
+  document.getElementById('size-12').onclick = makeSizer(12)
+  document.getElementById('size-14').onclick = makeSizer(14);
+  document.getElementById('size-16').onclick = makeSizer(16);
+
+
+
+</script>
