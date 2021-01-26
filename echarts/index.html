@@ -9,7 +9,6 @@
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main" style="width: 1000px;height:400px;"></div>
     <script type="text/javascript">
-        // 初始数据，接口返回
         const initData =[
             {
                 "time":"2021-01-15 10:46:51",
@@ -26,7 +25,7 @@
                 ]
             },
             {
-                "time":"2021-01-15 10:46:58",
+                "time":"2021-01-15 10:46:51",
                 "name":'1.txt',
                 "command":"mysqld",
                 "value":[
@@ -153,30 +152,74 @@
             },
         ]     
 
-        // 所有文件名，已去重
-        const nameList = Array.from(new Set(initData.map(d => d.name)))
-        const resultData = []
+        let xAxisData = []
 
-        // 核心方法。 入参：文件名称，出参：符合要求的数据[time,cpu]
-        const handleArr = (name)=>{
-            const nameData = initData.filter(d => d.name === name)
-            const arr = nameData.map(nd => {
-                const time = nd.time
-                const cpu = (nd.value || []).filter(n => n.pid === 0).map(d => d.cpu)
-                return [time,cpu]
+        const arr1 = []
+        const arr2 = []
+        const arr3 = []
+        const arr4 = []
+        const arr5 = []
+
+        const handleData = (item,arr)=>{
+            xAxisData.push(item.time)
+            item.value.forEach(v => {
+                if(v.pid === 00000){
+                    arr.push(v.cpu)
+                }
             })
-            return arr
         }
 
-        // 处理resultData
-        nameList.forEach(name => {
-            resultData.push({
-                name: name,
-                type: 'line',
-                data: handleArr(name)
-            })
+        initData.forEach(item => {
+            switch(item.name){
+                case '1.txt': 
+                    handleData(item,arr1)
+                    break
+                case '2.txt': 
+                    handleData(item,arr2)
+                    break
+                case '3.txt': 
+                    handleData(item,arr3)
+                    break
+                case '4.txt': 
+                    handleData(item,arr4)
+                    break
+                case '5.txt': 
+                    handleData(item,arr5)
+                    break
+                default: 
+                break
+            }
         })
 
+        const resultData =[
+            {
+                name:'1.txt',
+                type: 'line',
+                data:arr1,
+            },
+            {
+                name:'2.txt',
+                type: 'line',
+                data:arr2,
+            },
+            {
+                name:'3.txt',
+                type: 'line',
+                data:arr3,
+            },
+            {
+                name:'4.txt',
+                type: 'line',
+                data:arr4,
+            },
+            {
+                name:'5.txt',
+                type: 'line',
+                data:arr5,
+            },
+        ]
+
+        console.log(xAxisData,resultData)
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
 
@@ -184,6 +227,7 @@
         var option = {
             xAxis: {
                 type: 'category',
+                data: Array.from(new Set(xAxisData))
             },
             legend: {
                 data: resultData.map(item =>item.name)
