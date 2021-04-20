@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+</html>
+<script>
+
+  // 引用类型在比较运算符时候,隐式转换会调用本类型toString或valueOf方法.
+  var a = {
+    i: 1,
+    valueOf:()=>{
+      return a.i++; // 每调用一次valueOf，让a的属性i自增1，且返回。
+    },
+  }
+
+  if(a == 1 && a == 2 && a == 3){  // 每一次==运算时，都会调用一次a 的valueOf方法。
+    // console.log(1)
+  }
+
+
+  var b = {
+    num: 1,
+    toString() {
+      return b.num++
+    }
+  }
+  if(b == 1 && b == 2 && b == 3){  
+    // console.log(1)
+  }
+
+  var c = {
+    num: 1,
+    [Symbol.toPrimitive](h) {
+      return c.num++
+    }
+  }
+  if(c == 1 && c == 2 && c == 3){  
+    // console.log(1)
+  }
+
+  var d = new Proxy(
+    {},
+    {
+      num:1,    
+      get:function(){
+        return ()=> this.num++;
+      }
+    }
+  )
+   
+  if(d == 1 && d == 2 && d == 3){  
+    console.log(1)
+  }
+
+
+
+</script>

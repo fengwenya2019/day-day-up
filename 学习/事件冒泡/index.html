@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件冒泡&&事件委托</title>
+</head>
+<style>
+  body{
+    display: flex;
+  }
+
+  .demo{
+    margin: 100px;
+    border: solid 1px black;
+  }
+
+  #father{
+    /* position: absolute;
+    top: 0px; */
+    width: 200px;
+    height: 200px;
+    background-color: red;
+  } 
+  #son{
+    /* position: absolute;
+    top: 210px; */
+    width: 100px;
+    height: 100px;
+    background-color: green;
+  }
+
+  ul{
+    /* background: red; */
+    list-style: none;
+    background-color: pink;
+    padding: 10px;
+  }
+  ul>li{
+    width: 150px;
+    height: 30px;
+    border:solid 1px red;
+    margin: 10px;
+  }
+</style>
+<body>
+  <div class="demo">
+    <h1>demo1:事件冒泡</h1>
+    <div id="father">
+      父元素
+      <div id="son">子元素</div>
+    </div>
+  </div>
+
+  <div class="demo">
+    <h1>demo2:事件委托</h1>
+    <ul id="task-list">
+      <li id="a">a变成aaa</li>
+      <li id="b">弹出b</li>
+      <li id="c">字体c颜色变绿</li>
+    </ul>
+  </div>
+</body>
+</html>
+<script>
+  // 事件冒泡
+  const father = document.getElementById('father')
+  const son = document.getElementById('son')
+
+  father.onclick = function(){
+    alert('我是父元素')
+  }
+  son.onclick = function(e){
+    alert('我是子元素')
+    // e.stopPropagation()阻止冒泡
+    e.stopPropagation()
+  }
+
+  // 事件委托
+
+  const taskList = document.getElementById('task-list')
+  const a = document.getElementById('a')
+  const b = document.getElementById('b')
+  const c = document.getElementById('c')
+  taskList.onclick = function(e){
+    const id = e.target.id
+    switch (id) {
+      case 'a':
+        a.innerHTML="aaa"
+        break;
+        case 'b':
+        alert('b')
+        break;
+        case 'c':
+        c.style.color = "green"
+        break;
+      default:
+        break;
+    }
+  }
+</script>
